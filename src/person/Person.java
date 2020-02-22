@@ -14,6 +14,7 @@ public class Person implements Comparable<Person> {
 
     //Setter for first name
     public void setFirstName(String firstName) {
+        System.out.println(firstName);
         this.firstName = firstName;
     }
 
@@ -24,6 +25,7 @@ public class Person implements Comparable<Person> {
 
     //Setter for last name
     public void setLastName(String lastName) {
+        System.out.println(lastName);
         this.lastName = lastName;
     }
 
@@ -44,8 +46,8 @@ public class Person implements Comparable<Person> {
 
     //Setter for inserting new phone numbers
     public void setPhoneNumbers(String phoneNumber) {
-        if (phoneNumber == null) {
-            this.phoneNumbers.append(phoneNumbers);
+        if (phoneNumbers == null) {
+            this.phoneNumbers = new StringBuffer(phoneNumber);
         } else {
             this.phoneNumbers.append(", " + phoneNumber);
         }
