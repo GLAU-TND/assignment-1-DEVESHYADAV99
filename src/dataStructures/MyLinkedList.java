@@ -89,15 +89,13 @@ public class MyLinkedList<T extends Comparable<T>> {
         setIter(getIter().getNext());
         return temp;
     }
-
     //Method to sort linked list
     public void sort() {
         Node<T> pass1 = getHead();
-
         while (pass1 != null) {
             Node<T> pass2 = getHead();
             while (pass2 != null) {
-                if (pass1.getData().compareTo(pass2.getData()) > 0) {
+                if (pass1.getData().compareTo(pass2.getData()) < 0) {
                     T temp = pass1.getData();
                     pass1.setData(pass2.getData());
                     pass2.setData(temp);
