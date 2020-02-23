@@ -1,18 +1,18 @@
 package menu;
 
+import dataStructures.MyLinkedList;
+import node.Node;
 import person.Person;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Menu {
-    private ArrayList<Person> arrayList;
+    private MyLinkedList<Person> linkedList;
     private Scanner scan;
 
     public Menu() {
         scan = new Scanner(System.in);
-        arrayList = new ArrayList<>();
+        linkedList = new MyLinkedList<>();
     }
 
     public int showChoice() {
@@ -65,43 +65,68 @@ public class Menu {
             System.out.print("Email Address: ");
             email = scan.nextLine().trim();
             person.setEmailID(email);
+            System.out.println("y");
         } else {
             person.setEmailID("");
+            System.out.println("n");
         }
-        arrayList.add(person);
+
+        Node<Person> node = new Node<>();
+        node.setData(person);
+        linkedList.insert(node);
+    }
+
+    private void sortList(MyLinkedList<Person> linkedList) {
+        linkedList.sort();
     }
 
     public void viewChoice() {
-        Collections.sort(arrayList);
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println(arrayList.get(i));
+        sortList(linkedList);
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            System.out.println(node.getData());
         }
     }
 
     public void searchChoice() {
         int counter = 0;
-        Collections.sort(arrayList);
         System.out.print("You could search for a contact from their first names: ");
         scan.nextLine();
         String name = scan.nextLine().trim();
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (arrayList.get(i).getFirstName().compareTo(name) == 0)
+
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            if (node.getData().getFirstName().compareTo(name) == 0)
                 counter++;
         }
+
         System.out.println(counter + " match found!");
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (arrayList.get(i).getFirstName().compareTo(name) == 0)
-                System.out.println(arrayList.get(i));
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            if (node.getData().getFirstName().compareTo(name) == 0)
+                System.out.println(node.getData());
         }
     }
 
     public void deleteChoice() {
         System.out.println("Here are all your contacts:");
-        for (int i = 0; i < arrayList.size(); i++) {
-            System.out.println((i + 1) + ". " + arrayList.get(i).getFirstName() + " " + arrayList.get(i).getLastName());
+        int i = 1;
+        while (true) {
+            Node<Person> node = linkedList.getObject();
+            if (node == null)
+                break;
+            System.out.println(i + ". " + node.getData().getFirstName() + " " + node.getData().getLastName());
+            i++;
         }
         System.out.print("Press the number against the contact to delete it: ");
-        Person person = arrayList.remove(scan.nextInt() - 1);
+        int position = scan.nextInt();
+        Person person = linkedList.delete(position).getData();
 
         System.out.println(person.getFirstName() + " " + person.getLastName() + "'s contact deleted from list!");
     }
